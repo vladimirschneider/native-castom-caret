@@ -36,7 +36,7 @@ export const TextListsWidget = ({
     if (currentText !== null && currentText !== '' && currentText !== text) {
       onBlur?.(currentText);
     }
-  }, [handleBlur, onBlur, currentText]);
+  }, [handleBlur, currentText, text, onBlur]);
 
   return (
     <div className={cx('wrapper')}>
@@ -53,8 +53,9 @@ export const TextListsWidget = ({
         {currentText || <Placeholder />}
         <Caret
           coords={{
-            x, y, height
+            x, y
           }}
+          height={height}
         />
       </div>
     </div>

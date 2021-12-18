@@ -7,10 +7,11 @@ const cx = classNames.bind(styles);
 
 export const Caret = ({
   coords: {
-    x, y, height
+    x, y
   },
+  height
 }: CaretProps) => {
-  if (x === null || y === null) {
+  if (x === null || y === null || height === null) {
     return null;
   }
 
@@ -18,8 +19,8 @@ export const Caret = ({
     <div
       className={cx('caret')}
       style={{
-        transform: `translate3d(${x}px, ${(y || 0)}px, 0px)`,
-        height: height || 0,
+        transform: `translate3d(${x}px, ${y}px, 0px)`,
+        height: height,
         backgroundColor: 'var(--color-system-blue-light)'
       }}
     />,

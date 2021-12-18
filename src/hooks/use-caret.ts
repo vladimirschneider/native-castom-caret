@@ -11,6 +11,9 @@ export const IGNORE_KEYS = [
   'Control',
   'Alt',
   'Meta',
+  'Escape',
+  'Tab',
+  'CapsLock',
 
   // Arrows
   'ArrowUp',
@@ -133,12 +136,9 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
 
       setCurrentText(left + right);
 
-      console.log(caretPosition);
-
       if (caretPosition !== 0 && caretPosition !== null) {
         setCaretPosition(caretPosition - 1);
       } else {
-        console.log(11);
         setCaretPosition(0);
       }
 
@@ -175,7 +175,10 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
     const selection = document.getSelection();
 
     if (selection && selection.focusNode && caretPosition !== null) {
-      range.setStart(selection.focusNode, caretPosition);
+      try {
+        range.setStart(selection.focusNode, caretPosition);
+      } catch (e) {}
+
       range.collapse(true);
       selection.removeAllRanges();
       selection.addRange(range);
