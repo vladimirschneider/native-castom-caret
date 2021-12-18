@@ -1,7 +1,7 @@
 :root {
-  --color-system-grey-light: hsl(240, 2%, 57%);
-  --color-system-blue-light: hsl(216, 100%, 39%);
-  --color-system-red-light: hsl(344, 100%, 39%);
+  --color-system-grey-light: rgb(142, 142, 147);
+  --color-system-blue-light: rgb(0, 122, 255);
+  --color-system-red-light: rgb(255, 45, 85);
 }
 
 body {

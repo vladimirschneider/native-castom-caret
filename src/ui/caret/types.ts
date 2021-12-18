@@ -1,6 +1,10 @@
 import { Coordinate } from '../../hooks/use-caret';
 
 export type CaretProps = {
-  x: Coordinate;
-  y: Coordinate;
+  coords: {
+    x: Coordinate;
+    y: Coordinate;
+    height: number | null;
+  }
+  name: string;
 };
