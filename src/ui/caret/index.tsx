@@ -5,22 +5,11 @@ import { CaretProps } from './types';
 
 const cx = classNames.bind(styles);
 
-const getColor = (min: number, max: number) => {
-  const red = Math.random() * (max - min) + min;
-  const green = Math.random() * (max - min) + min;
-  const blue = Math.random() * (max - min) + min;
-
-  return `rgb(${red}, ${green}, ${blue})`;
-};
-
 export const Caret = ({
   coords: {
     x, y, height
   },
-  name,
 }: CaretProps) => {
-  const color = getColor(0, 150);
-
   if (x === null || y === null) {
     return null;
   }
@@ -29,20 +18,11 @@ export const Caret = ({
     <div
       className={cx('caret')}
       style={{
-        transform: `translate3d(${x}px, ${(y || 0) + (height || 0) * 0.1}px, 0px)`,
+        transform: `translate3d(${x}px, ${(y || 0)}px, 0px)`,
         height: height || 0,
-        backgroundColor: color
+        backgroundColor: 'var(--color-system-blue-light)'
       }}
-    >
-      <div
-        className={cx('name')}
-        style={{
-          backgroundColor: color
-        }}
-      >
-        {name}
-      </div>
-    </div>,
+    />,
     // @ts-ignore
     document.getElementById('caret')
   );

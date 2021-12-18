@@ -6,5 +6,4 @@ export type CaretProps = {
     y: Coordinate;
     height: number | null;
   }
-  name: string;
 };

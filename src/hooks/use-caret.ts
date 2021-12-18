@@ -47,9 +47,9 @@ const getCoords = (node: RefObject<HTMLDivElement>, text: string | null) => {
     x, y, height,
   } = selection.getRangeAt(0).getBoundingClientRect();
 
-  if (!text || text.length === 0) {
+  if (text === null || text === '') {
     return {
-      x: node.current?.clientLeft || null,
+      x: node.current?.offsetLeft || 0,
       y: y + scrollTopSize,
       height
     };
@@ -84,7 +84,11 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
 
     setHeight(coords.height);
 
-    setCaretPosition(selection.getRangeAt(0).startOffset);
+    if (currentText !== null && currentText !== '') {
+      setCaretPosition(selection.getRangeAt(0).startOffset);
+    } else {
+      setCaretPosition(0);
+    }
   }, [node, currentText]);
 
   const handleChange = useCallback((e: any) => {
@@ -109,18 +113,18 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
     }
 
     if (ARROW_RIGHT_KEY.includes(e.key)) {
-      if (caretPosition !== null && currentText && caretPosition < currentText.length) {
+      if (caretPosition !== null && currentText !== null && currentText !== '' && caretPosition < currentText.length) {
         setCaretPosition(caretPosition + 1);
       }
       return;
     }
 
     if (BACKSPACE_KEY.includes(e.key)) {
-      if (!currentText || currentText?.length === 0) {
+      if (currentText === null || currentText === '') {
         return;
       }
 
-      if (caretPosition === null) {
+      if (caretPosition === null || caretPosition === 0) {
         return;
       }
 
@@ -129,7 +133,14 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
 
       setCurrentText(left + right);
 
-      setCaretPosition(caretPosition - 1);
+      console.log(caretPosition);
+
+      if (caretPosition !== 0 && caretPosition !== null) {
+        setCaretPosition(caretPosition - 1);
+      } else {
+        console.log(11);
+        setCaretPosition(0);
+      }
 
       return;
     }
@@ -138,8 +149,9 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
       return;
     }
 
-    if (!currentText || currentText?.length === 0) {
+    if (currentText === null || currentText === '') {
       setCurrentText(e.key);
+      setCaretPosition(e.key.length);
       return;
     }
 
@@ -162,7 +174,7 @@ export const useCaret = (node: RefObject<HTMLDivElement>, text: string | null) =
     const range = new Range();
     const selection = document.getSelection();
 
-    if (selection && selection.focusNode && caretPosition) {
+    if (selection && selection.focusNode && caretPosition !== null) {
       range.setStart(selection.focusNode, caretPosition);
       range.collapse(true);
       selection.removeAllRanges();
